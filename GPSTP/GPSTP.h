@@ -1,6 +1,6 @@
 //Name: General Purpuse Stream Protocol
 //Date: 10 June 2016
-//Modiefed: 17 June 2016
+//Modified: 22 August 2016
 //Auther: Jeroen Ruiten
 
 //opbouw protocol:
@@ -19,8 +19,8 @@
 #endif
 
 //Protocol specificatie, zou niet veranderd hoeven worden
-#define HEADER_LENGHT 5
-#define CRC_LENGHT 2
+#define HEADER_LENGTH 5
+#define CRC_LENGTH 2
 
 //timeout to next byte in ms, als niet gedefineerd in de schetch, neem standaard waarde
 #ifndef TIMEOUT
@@ -58,7 +58,7 @@ class GPSTP {
     
   private:
     //enums
-    enum _State {
+    enum class _State {
       EXPECT_HEADER,
       RECIEVE_HEADER,
       PROCESS_HEADER,
@@ -68,7 +68,7 @@ class GPSTP {
       PROCESS_CRC
     };
 
-    enum _Error {
+    enum class _Error {
       TIMED_OUT,
       PAYLOAD_TOO_LONG,
       PAYLOAD_INVALLID_LENGTH,
@@ -79,7 +79,7 @@ class GPSTP {
       HEADER_ERROR
     };
 
-    enum _PreHeader {
+    enum class _PreHeader {
       PRE_HEADER_1,
       PRE_HEADER_2,
       SOH
@@ -129,9 +129,9 @@ class GPSTP {
     uint16_t _handlerCallbackPort[MAX_HANDLER_CALLBACK];
     boolean _ownHandlerManager;
     uint32_t _startTime;
-    uint8_t _header[HEADER_LENGHT];
+    uint8_t _header[HEADER_LENGTH];
     uint8_t _payload[MAX_PAYLOAD];
-    uint8_t _crc[CRC_LENGHT];
+    uint8_t _crc[CRC_LENGTH];
     uint16_t _payloadLen;
     uint16_t _handlerPort;
     _State _state;
@@ -159,11 +159,11 @@ class GPSTP {
     void _timeOutHandler();
     
     void _expectHeader();
-    void _recieveHeader();
+    void _receiveHeader();
     void _processHeader();
-    void _recievePayload();
+    void _receivePayload();
     void _processPayload();
-    void _recieveCRC();
+    void _receiveCRC();
     void _processCRC();
 
     boolean _isHandlerCallback(uint16_t handlerPort);
