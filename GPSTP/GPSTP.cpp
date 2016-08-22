@@ -265,7 +265,7 @@ void GPSTP::_expectHeader() {
 */
 
 //ontvang header, als cursor op header lenght is, chage state to PROCESS_HEADER
-void GPSTP::_recieveHeader() {
+void GPSTP::_receiveHeader() {
   _header[_cursor] = _serial->read();
   _cursor++;
 
@@ -303,7 +303,7 @@ void GPSTP::_processHeader() {
 //cursor is op 0 gezet
 //als er geen payload is, zet state direct op RECIEVE_CRC
 //anders net zo lang blijven lezen totdat payloadLen is bereikt en dan state op RECIEVE_CRC
-void GPSTP::_recievePayload() {
+void GPSTP::_receivePayload() {
   if (_payloadLen == 0) {
     _state = RECIEVE_CRC;
     return;
@@ -323,7 +323,7 @@ void GPSTP::_recievePayload() {
 //lees 2 bytes CRC
 //cursor is op 0 gezet
 //als alles gelezen is wordt state op PROCESS_CRC gezet
-void GPSTP::_recieveCRC() {
+void GPSTP::_receiveCRC() {
   //lees volgende CRC
   _crc[_cursor] = _serial->read();
   _cursor++;
